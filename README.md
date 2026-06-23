@@ -2,30 +2,6 @@
 
 #Bernardo Nardelli, Caua Gomes, João Paulo Costa, João Pedro Braga, Miguel Assunção, Henrique Vale.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 nome-do-projeto/
 ├── frontend/
 │   └── index.html
