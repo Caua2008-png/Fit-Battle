@@ -38,3 +38,26 @@ class FitbattleController():
         return jsonify({
             "mensagem": "Registro concluido!",
         })
+
+    @staticmethod
+    def listar():
+        usuario = request.args.get("usuario")
+        senha = request.args.get("senha")
+        email = request.args.get("email")
+        resultado = RegistroServices.consulta_alunos(usuario=usuario, senha=senha, email=email)
+        return jsonify(resultado)
+
+    @staticmethod
+    def excluir(id):
+        usuario = RegistroServices.exclui_aluno(id)
+        if not usuario:
+            return jsonify({"erro": "Usuário não encontrado"}), 404
+        return jsonify({
+            "mensagem": "Usuário excluído",
+            "id": usuario.id
+        })
+
+    @staticmethod
+    def estatisticas():
+        estatisticas = RegistroServices.gera_estatisticas()
+        return jsonify(estatisticas)
