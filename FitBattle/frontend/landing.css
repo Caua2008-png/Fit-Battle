@@ -1,0 +1,128 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #0a0a0f;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.logo .fit { color: #ffffff; }
+.logo .battle { color: #1ec8ff; }
+
+.hero-title {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.hero-collage {
+  display: flex;
+  width: 100%;
+  height: 260px;
+}
+
+.hero-photo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--from), var(--to));
+  font-size: 42px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.cta-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 40px;
+}
+
+.btn-inscreva {
+  display: inline-block;
+  padding: 16px 34px;
+  border-radius: 30px;
+  background-color: #1ec8ff;
+  color: #06131a;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-inscreva:hover {
+  background-color: #4dd4ff;
+}
+
+.btn-inscreva:active {
+  transform: scale(0.98);
+}
+
+.feature-list {
+  display: flex;
+  gap: 50px;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.feature-label {
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.feature-icon {
+  font-size: 30px;
+}
+
+.feature-icon.stats { color: #3f7fd1; }
+.feature-icon.ranks { color: #d8a746; }
+.feature-icon.goals { color: #c9c9c9; }
+
+@media (max-width: 700px) {
+  .landing-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .hero-collage {
+    height: 160px;
+  }
+
+  .cta-section {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 20px;
+  }
+
+  .feature-list {
+    gap: 30px;
+  }
+}

@@ -43,6 +43,11 @@ with app.app_context():
 
 
 @app.route("/")
+def pagina_landing():
+    return send_from_directory(FRONTEND_DIR, "landing.html")
+
+
+@app.route("/cadastro")
 def pagina_cadastro():
     return send_from_directory(FRONTEND_DIR, "index.html")
 
