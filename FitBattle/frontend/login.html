@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitBattle - Entrar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="left-panel">
+      <h1 class="title">ENTRAR</h1>
+      <p class="subtitle">Continue sua evolução no FitBattle</p>
+
+      <form id="loginForm" class="register-form" novalidate>
+
+        <div class="field">
+          <label for="identificador">Usuário ou email:</label>
+          <input type="text" id="identificador" name="identificador" placeholder="Seu usuário ou email" required>
+        </div>
+
+        <div class="field">
+          <label for="senha">Senha:</label>
+          <input type="password" id="senha" name="senha" placeholder="Sua senha" required>
+        </div>
+
+        <span class="error-message" id="errorMessage"></span>
+
+        <button type="submit" class="btn-cadastrar">ENTRAR</button>
+      </form>
+
+      <div class="login-section">
+        <p class="login-text">ainda não tem uma conta? <a href="/" class="login-link">Cadastre-se</a></p>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 10 L10 100 L28 100 L28 65 L55 65 L55 50 L28 50 L28 25 L62 25 L62 10 Z" fill="#ffffff"/>
+          <path d="M95 5 L55 55 L78 55 L45 105 L110 45 L85 45 Z" fill="#1ec8ff"/>
+        </svg>
+        <div class="logo-text">
+          <span class="logo-fit">Fit</span><span class="logo-battle">Battle</span>
+        </div>
+      </div>
+      <p class="tagline">Treine. Compete. Evolua.</p>
+
+      <div class="social-section">
+        <div class="social-icon"></div>
+        <span class="social-text">Siga-nos nas redes sociais</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

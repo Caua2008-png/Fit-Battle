@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitBattle</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="logo" id="homeBtn" aria-label="FitBattle - voltar para a home">
+    <span class="fit">FIT</span><span class="battle">BATTLE</span>
+  </button>
+  <div class="search-wrap">
+    <label for="searchInput" class="visually-hidden">Pesquisar no feed</label>
+    <input id="searchInput" type="text" placeholder="Buscar treinos, postagens...">
+    <i class="ti ti-search" aria-hidden="true"></i>
+  </div>
+  <div class="topbar-icons">
+    <button class="avatar-mini" id="navAvatar" aria-label="Editar perfil"></button>
+    <button class="icon-btn chart" id="btnProgress" aria-label="Ver progresso"><i class="ti ti-chart-line" aria-hidden="true"></i></button>
+    <button class="icon-btn trophy" id="btnRanking" aria-label="Ver ranking"><i class="ti ti-trophy" aria-hidden="true"></i></button>
+    <button class="icon-btn" id="btnSettings" aria-label="Configurações"><i class="ti ti-settings" aria-hidden="true"></i></button>
+  </div>
+</header>
+
+<div class="banner"></div>
+
+<div class="profile-block">
+  <div class="avatar-lg-wrap">
+    <button class="avatar-lg" id="avatarBtn" aria-label="Alterar foto de perfil"></button>
+    <div class="avatar-edit-badge"><i class="ti ti-camera" aria-hidden="true"></i></div>
+  </div>
+
+  <div class="profile-top">
+    <div>
+      <div class="profile-id">
+        <h1 id="pName">—</h1>
+        <button class="edit-pencil" id="editProfileBtn" aria-label="Editar perfil"><i class="ti ti-pencil" aria-hidden="true"></i></button>
+      </div>
+      <p class="profile-sub" id="pSub">—</p>
+      <p class="profile-bio" id="pBio"></p>
+    </div>
+    <div class="profile-right">
+      <div class="profile-stats">
+        <div class="stat"><b id="statTreinos">0</b><span>Treinos</span></div>
+        <div class="stat"><b id="statRank">—</b><span>Ranking local</span></div>
+        <div class="stat"><b id="statStreak">0d</b><span>Sequência de treinos</span></div>
+      </div>
+      <div class="physical-stats">
+        <span>Peso: <b id="pWeight">—</b></span>
+        <span>Altura: <b id="pHeight">—</b></span>
+        <span>Idade: <b id="pAge">—</b></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="level-block">
+    <div class="level-label"><span>Nível</span><strong id="levelName">—</strong></div>
+    <div class="level-track-row">
+      <div class="level-track">
+        <div class="level-fill" id="levelFill" style="width:0%"></div>
+        <div class="level-marker" id="levelMarker" style="left:0%"></div>
+        <div class="level-arrow" id="levelArrow" style="left:0%"><i class="ti ti-arrow-up" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <div class="level-remaining" id="levelRemaining">—</div>
+  </div>
+</div>
+
+<main class="feed" id="feed"></main>
+
+<button class="fab" id="fabBtn" aria-label="Criar novo treino ou postagem">+</button>
+
+<!-- Modal: escolher tipo -->
+<div class="overlay" id="overlayChoice">
+  <div class="modal">
+    <button class="modal-close" id="closeChoice" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
+    <h2>O que você quer criar?</h2>
+    <div class="choice-row">
+      <button class="choice-card" id="choiceTreino"><i class="ti ti-barbell" aria-hidden="true"></i>Novo treino</button>
+      <button class="choice-card" id="choicePost"><i class="ti ti-message-2" aria-hidden="true"></i>Nova postagem</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: novo treino -->
+<div class="overlay" id="overlayTreino">
+  <div class="modal">
+    <button class="modal-close" id="closeTreino" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
+    <h2>Novo treino</h2>
+    <form id="formTreino">
+      <div class="field-row-2">
+        <div class="field">
+          <label for="treinoCategoria">Categoria</label>
+          <select id="treinoCategoria">
+            <option value="musculacao">Musculação</option>
+            <option value="cardio">Cardio</option>
+            <option value="yoga">Yoga</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="treinoGrupo">Grupo / título</label>
+          <input type="text" id="treinoGrupo" placeholder="Ex: Peito, Corrida" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="treinoDesc">Descrição</label>
+        <textarea id="treinoDesc" placeholder="Como foi o treino?" required></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="s1v">Duração (min)</label><input type="number" id="s1v" min="0" required></div>
+        <div class="field"><label id="s2Label" for="s2v">Carga máx. (kg)</label><input type="number" id="s2v" min="0" required></div>
+        <div class="field"><label id="s3Label" for="s3v">Séries</label><input type="number" id="s3v" min="0" required></div>
+      </div>
+      <span class="error-message" id="erroTreino"></span>
+      <button type="submit" class="modal-submit">Publicar treino</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: nova postagem -->
+<div class="overlay" id="overlayPost">
+  <div class="modal">
+    <button class="modal-close" id="closePost" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
+    <h2>Nova postagem</h2>
+    <form id="formPost">
+      <div class="field">
+        <label for="postTexto">O que você quer compartilhar?</label>
+        <textarea id="postTexto" placeholder="Escreva sua postagem..." required></textarea>
+      </div>
+      <div class="field">
+        <label for="postFoto">Foto (opcional)</label>
+        <input type="file" id="postFoto" accept="image/*">
+      </div>
+      <span class="error-message" id="erroPost"></span>
+      <button type="submit" class="modal-submit">Publicar postagem</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: editar perfil -->
+<div class="overlay" id="overlayProfile">
+  <div class="modal">
+    <button class="modal-close" id="closeProfile" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
+    <h2>Editar perfil</h2>
+    <div class="avatar-upload-row">
+      <button type="button" class="avatar-lg" id="editAvatarPreview" aria-label="Foto de perfil"></button>
+      <div>
+        <input type="file" id="avatarFile" accept="image/*" class="visually-hidden">
+        <button type="button" class="file-btn" id="avatarFileBtn">Alterar foto</button>
+      </div>
+    </div>
+    <form id="formProfile">
+      <div class="field"><label for="editName">Nome</label><input type="text" id="editName" required></div>
+      <div class="field-row-2">
+        <div class="field"><label for="editHandle">Usuário</label><input type="text" id="editHandle" required></div>
+        <div class="field"><label for="editLocation">Localização</label><input type="text" id="editLocation" required></div>
+      </div>
+      <div class="field"><label for="editBio">Bio</label><textarea id="editBio"></textarea></div>
+      <div class="field-row">
+        <div class="field"><label for="editWeight">Peso (kg)</label><input type="number" id="editWeight" min="0"></div>
+        <div class="field"><label for="editHeight">Altura (m)</label><input type="number" step="0.01" id="editHeight" min="0"></div>
+        <div class="field"><label for="editAge">Idade</label><input type="number" id="editAge" min="0"></div>
+      </div>
+      <span class="error-message" id="erroProfile"></span>
+      <button type="submit" class="modal-submit">Salvar alterações</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: ranking -->
+<div class="overlay" id="overlayRanking">
+  <div class="modal">
+    <button class="modal-close" id="closeRanking" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
+    <h2>Ranking local</h2>
+    <div id="rankingList"></div>
+  </div>
+</div>
+
+<!-- Modal: progresso -->
+<div class="overlay" id="overlayProgress">
+  <div class="modal">
+    <button class="modal-close" id="closeProgress" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
+    <h2>Seu progresso</h2>
+    <div class="progress-list" id="progressList"></div>
+  </div>
+</div>
+
+<!-- Modal: configurações -->
+<div class="overlay" id="overlaySettings">
+  <div class="modal">
+    <button class="modal-close" id="closeSettings" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
+    <h2>Configurações</h2>
+    <div class="setting-row">
+      <span>Unidade de peso em lb</span>
+      <button class="toggle" id="toggleUnit" aria-label="Alternar unidade de peso"><div class="dot"></div></button>
+    </div>
+    <div class="setting-row">
+      <span>Notificações de treino</span>
+      <button class="toggle on" id="toggleNotif" aria-label="Alternar notificações"><div class="dot"></div></button>
+    </div>
+    <div class="setting-row">
+      <span>Perfil público no ranking</span>
+      <button class="toggle on" id="togglePublic" aria-label="Alternar visibilidade no ranking"><div class="dot"></div></button>
+    </div>
+    <div class="setting-row">
+      <span>Sair da conta</span>
+      <button class="pill-btn danger" id="btnLogout">Sair</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-check" aria-hidden="true"></i><span id="toastMsg"></span></div>
+
+<script src="app.js"></script>
+</body>
+</html>

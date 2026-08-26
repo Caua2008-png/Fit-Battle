@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Tudo certo - aqui você integraria com o backend
     cadastrarUsuario({
       usuario: usuario.value.trim(),
       email: email.value.trim(),
-      senha: senha.value
+      senha: senha.value,
+      confirmaSenha: confirmaSenha.value
     });
   });
 
@@ -52,8 +52,23 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function cadastrarUsuario(dados) {
-    console.log('Dados de cadastro:', dados);
-    alert('Cadastro realizado com sucesso!');
-    form.reset();
+    fetch('/api/cadastro', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(dados)
+    })
+      .then(function (resposta) {
+        return resposta.json().then(function (corpo) {
+          if (!resposta.ok) throw new Error(corpo.erro || 'Não foi possível concluir o cadastro.');
+          return corpo;
+        });
+      })
+      .then(function () {
+        window.location.href = '/app';
+      })
+      .catch(function (erro) {
+        showError(erro.message);
+      });
   }
 });
