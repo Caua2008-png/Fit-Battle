@@ -2,21 +2,27 @@
 
 #Bernardo Nardelli, Cauã Gomes, João Paulo Costa, João Pedro Braga, Miguel Assunção, Henrique Vale.
 
-nome-do-projeto/
+FitBattle/
 ├── frontend/
-│   └── index.html
+│   ├── index.html      # Cadastro
+│   ├── login.html       # Login
+│   ├── app.html          # Aplicativo (perfil + feed), após autenticado
+│   ├── style.css         # Estilo de cadastro/login
+│   ├── app.css           # Estilo do aplicativo
+│   ├── script.js         # Lógica de cadastro
+│   ├── login.js           # Lógica de login
+│   └── app.js              # Lógica do aplicativo (consome a API)
 └── backend/
-    ├── app.py
-    ├── controllers/
-    │   └── user_controller.py
-    ├── models/
-    │   └── user_model.py
-    ├── repositories/
-    │   └── user_repository.py
-    ├── services/
-    │   └── user_service.py
-    └── database/
-        └── create_database.sql
+    ├── app.py             # Cria o Flask app, registra rotas e serve o frontend
+    ├── requirements.txt
+    ├── database/          # Instância do SQLAlchemy
+    ├── models/            # Usuario, Treino, Postagem
+    ├── repositories/       # Acesso ao banco
+    ├── services/            # Regras de negócio (validação, XP, nível, streak)
+    ├── controllers/          # Camada HTTP (recebe request, chama service, devolve JSON)
+    ├── routers/                # Registro das rotas da API (blueprint /api)
+    └── static/uploads/          # Fotos de perfil e de postagens enviadas
+    
         
 Funcionalidades:
 1:Cadastrar Usuarios
