@@ -1,35 +1,39 @@
 # Fit-Battle
 
-Bernardo Nardelli, Cauã Gomes, João Paulo Costa, João Pedro Braga, Miguel Assunção, Henrique Vale.
+Projeto desenvolvido por Bernardo Nardelli, Cauã Gomes, João Paulo Costa, João Pedro Braga, Miguel Assunção e Henrique Vale.
 
-Rede social de treinos: cadastro/login, perfil com nível e XP, feed de treinos e postagens, ranking local e configurações. Backend em Flask + SQLAlchemy, frontend em HTML/CSS/JS puro servido pelo próprio Flask.
+A ideia do Fit-Battle nasceu de uma vontade simples: tornar o treino menos solitário. É uma rede social voltada pra quem treina — você cria uma conta, monta seu perfil, registra seus treinos e posts, ganha XP e sobe de nível conforme mantém a consistência, e ainda pode ver como está no ranking em relação aos outros usuários. A ideia é misturar um pouco de jogo com hábito saudável.
 
-## Estrutura
+Por baixo dos panos, o backend é feito em Flask com SQLAlchemy, e o frontend é HTML, CSS e JavaScript puro (sem framework), servido diretamente pelo Flask — nada de build complicado, é só rodar e usar.
+
+## Como o projeto está organizado
 
 ```
 FitBattle/
 ├── frontend/
-│   ├── index.html      # Cadastro
-│   ├── login.html       # Login
-│   ├── app.html          # Aplicativo (perfil + feed), após autenticado
-│   ├── style.css         # Estilo de cadastro/login
-│   ├── app.css           # Estilo do aplicativo
-│   ├── script.js         # Lógica de cadastro
-│   ├── login.js           # Lógica de login
-│   └── app.js              # Lógica do aplicativo (consome a API)
+│   ├── index.html      # Tela de cadastro
+│   ├── login.html      # Tela de login
+│   ├── app.html         # O app em si (perfil + feed), depois de logado
+│   ├── style.css        # Estilo das telas de cadastro/login
+│   ├── app.css           # Estilo do app
+│   ├── script.js         # Lógica da tela de cadastro
+│   ├── login.js            # Lógica da tela de login
+│   └── app.js                # Lógica do app, consome a API do backend
 └── backend/
-    ├── app.py             # Cria o Flask app, registra rotas e serve o frontend
+    ├── app.py             # Onde o Flask app é criado, registra as rotas e serve o frontend
     ├── requirements.txt
     ├── database/          # Instância do SQLAlchemy
     ├── models/            # Usuario, Treino, Postagem
-    ├── repositories/       # Acesso ao banco
-    ├── services/            # Regras de negócio (validação, XP, nível, streak)
-    ├── controllers/          # Camada HTTP (recebe request, chama service, devolve JSON)
+    ├── repositories/       # Acesso ao banco de dados
+    ├── services/            # Regras de negócio (validações, cálculo de XP, nível, streak)
+    ├── controllers/          # Camada HTTP: recebe a request, chama o service, devolve o JSON
     ├── routers/                # Registro das rotas da API (blueprint /api)
-    └── static/uploads/          # Fotos de perfil e de postagens enviadas
+    └── static/uploads/          # Fotos de perfil e de postagens que os usuários enviam
 ```
 
-## Como rodar
+## Rodando o projeto na sua máquina
+
+Só precisa de Python instalado. No PowerShell, dentro da pasta do projeto:
 
 ```powershell
 cd FitBattle\backend
@@ -38,31 +42,33 @@ python -m venv .venv
 .venv\Scripts\python app.py
 ```
 
-Acesse `http://127.0.0.1:5000/` para se cadastrar. O banco SQLite (`fitbattle.db`) é criado automaticamente na primeira execução.
+Depois é só abrir `http://127.0.0.1:5000/` no navegador e criar sua conta. Na primeira vez que você roda, o banco SQLite (`fitbattle.db`) é criado sozinho, então não precisa se preocupar em configurar nada além disso.
 
-## Funcionalidades
+## O que dá pra fazer no app
 
-1. Cadastro e login de usuários (sessão via cookie, senha com hash)
-2. Edição de perfil (nome, usuário, localização, bio, peso, altura, idade, foto)
-3. Publicação de treinos (musculação, cardio, yoga, outro) e postagens com foto
-4. Feed com busca, exclusão de conteúdo próprio e compartilhamento de link
-5. Cálculo automático de XP, nível e sequência (streak) de treinos
-6. Ranking local dos usuários por XP
-7. Configurações (unidade de peso, notificações, visibilidade no ranking)
+- Criar conta e fazer login (a sessão fica salva em cookie, e a senha nunca é guardada em texto puro, sempre com hash)
+- Editar o perfil: nome, usuário, localização, bio, peso, altura, idade e foto
+- Publicar treinos (musculação, cardio, yoga ou outro tipo) e postagens com foto
+- Ver o feed com busca, apagar seu próprio conteúdo e compartilhar o link de um post
+- Acompanhar XP, nível e sequência de dias treinando (streak), tudo calculado automaticamente
+- Conferir o ranking dos usuários por XP
+- Ajustar configurações, como unidade de peso, notificações e visibilidade no ranking
 
-## API (`/api`)
+## API
 
-| Método | Rota | Descrição |
+Todas as rotas ficam sob o prefixo `/api`:
+
+| Método | Rota | O que faz |
 |---|---|---|
-| POST | `/cadastro` | Cria um usuário e já autentica |
-| POST | `/login` | Autentica por usuário ou email + senha |
+| POST | `/cadastro` | Cria um usuário novo e já loga ele |
+| POST | `/login` | Loga com usuário ou email + senha |
 | POST | `/logout` | Encerra a sessão |
-| GET | `/sessao` | Verifica se há sessão ativa |
-| GET/PUT | `/perfil` | Lê/atualiza o perfil do usuário logado |
+| GET | `/sessao` | Checa se tem alguém logado |
+| GET/PUT | `/perfil` | Lê ou atualiza o perfil de quem está logado |
 | POST | `/perfil/avatar` | Envia a foto de perfil |
-| PUT | `/perfil/configuracoes` | Atualiza as configurações |
-| GET | `/ranking` | Lista o ranking local por XP |
-| GET | `/feed` | Lista treinos e postagens (aceita `?busca=`) |
+| PUT | `/perfil/configuracoes` | Atualiza as configurações do usuário |
+| GET | `/ranking` | Lista o ranking por XP |
+| GET | `/feed` | Lista os treinos e postagens (aceita `?busca=` pra filtrar) |
 | POST | `/treinos` | Publica um treino |
-| POST | `/postagens` | Publica uma postagem (aceita foto) |
-| DELETE | `/cards/<tipo>/<id>` | Exclui um treino ou postagem próprio |
+| POST | `/postagens` | Publica uma postagem (pode incluir foto) |
+| DELETE | `/cards/<tipo>/<id>` | Apaga um treino ou postagem que seja seu |
