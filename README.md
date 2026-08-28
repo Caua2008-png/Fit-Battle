@@ -12,6 +12,7 @@ FitBattle/
 │   ├── script.js         # Lógica de cadastro
 │   ├── login.js           # Lógica de login
 │   └── app.js              # Lógica do aplicativo (consome a API)
+|
 └── backend/
     ├── app.py             # Cria o Flask app, registra rotas e serve o frontend
     ├── requirements.txt
